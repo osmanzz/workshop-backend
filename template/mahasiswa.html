@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script>
+        $(document).ready(function(){
+            initTable()
+            initAction()
+        });
+
+        function initTable() {
+            $.ajax({
+                url: "http://localhost:8080/select_all_data",
+                type: 'GET',
+                success: function(result){
+                    generateContent(result)
+                }});
+        }
+
+        function generateContent(result) {
+            var htmlData;
+
+            result = result.user_data;
+            Object.keys(result).forEach(function (key) {
+                htmlData += '<tr>';
+                htmlData += '<td>'+result[key].id+'</td>';
+                htmlData += '<td>'+result[key].name+'</td>';
+                htmlData += '<td>'+result[key].password+'</td>';
+                htmlData += '<td>'+result[key].alamat+'</td>';
+                var perpus = result[key].perpustakaan;
+                if (perpus != null) {
+                    Object.keys(perpus).forEach(function (cons) {
+                        htmlData += '<td>'+perpus[cons].id+'</td>';
+                        htmlData += '<td>'+perpus[cons].buku+'</td>';
+                        htmlData += '<td>'+perpus[cons].tanggal+'</td>';
+                    });
+                } else {
+                    htmlData += '<td></td>';
+                    htmlData += '<td></td>';
+                    htmlData += '<td></td>';
+                }
+                htmlData += '</tr>';
+            });
+            $('#datatable tbody').html(htmlData);
+        }
+
+        function initAction() {
+            $("#action-add").on("click",{action : "add"}, actionList)
+        }
+
+        var paramInsert = {
+            name: "",
+            password: "",
+            alamat: "",
+        };
+
+        function actionList(event) {
+            var actionType = event.data.action;
+
+            if (actionType === "add") {
+                Swal.fire({
+                    title: "Tambah Mahasiswa",
+                    html: "<fieldset><table align='center'>" +
+                        "<tr>" +
+                        "<td align='left'>Name</td>" +
+                        "<td><input class='swal2-input' id='add-name'/></td>" +
+                        "</tr><tr>" +
+                        "<td align='left'>Password</td>" +
+                        "<td><input class='swal2-input' id='add-password'/></td>" +
+                        "</tr><tr>" +
+                        "<td align='left'>Alamat</td>" +
+                        "<td><input class='swal2-input' id='add-alamat'/></td>" +
+                        "</tr><tr>" +
+                        "</tr>" +
+                        "</table>" +
+                        "</fieldset>",
+                    confirmButtonText: 'Daftarin Yak',
+                    showCancelButton: true,
+                    preConfirm: () => {
+                        paramInsert.name = $("#add-name").val();
+                        paramInsert.password = $("#add-password").val();
+                        paramInsert.alamat = $("#add-alamat").val();
+
+
+                        var jsonData = JSON.stringify(paramInsert);
+                        $.ajax({
+                            dataType: 'json',
+                            url: 'http://localhost:8080/insert_data_mahasiswa',
+                            type: 'POST',
+                            data: jsonData,
+                            success:
+                                function (result) {
+                                    Swal.fire(result["message"])
+                                },
+                            error: Swal.fire('Gagal, Coba lagi ya')
+                        });
+                    }
+                });
+                initTable()
+            }
+        }
+    </script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button id="action-add" value="search" type="submit">Mau Insert Mahasiswa</button>
+<table id="datatable" border="1px">
+    <thead>
+    <tr>
+        <th rowspan="2">ID</th>
+        <th rowspan="2">Name</th>
+        <th rowspan="2">Password</th>
+        <th rowspan="2">Alamat</th>
+        <th colspan="4">Perpustakaan</th>
+    <tr>
+        <th>ID Perpustakaan</th>
+        <th>Buku</th>
+        <th>Tanggal</th>
+    </tr>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+</body>
+</html>

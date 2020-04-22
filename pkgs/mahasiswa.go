@@ -24,7 +24,7 @@ func GetAllPerpustakaanDataByUserID(id int64) ([]*model.PerpustakaanData, error)
 	if err != nil {
 		return res, err
 	}
-	err = db.Select(&res, "select * from perpustakaan where mhs_id=$1", id)
+	err = db.Select(&res, "select * from perpustakaan where mhs_id=?", id)
 	if err != nil {
 		return res, err
 	}
@@ -38,7 +38,7 @@ func InsertUserData(data *model.UserDataRequest) error {
 		return err
 	}
 	tx := db.MustBegin()
-	tx.MustExec("insert into mahasiswa(name,password,alamat) values ($1,$2,$3)", data.Name, data.Password, data.Alamat)
+	tx.MustExec("insert into mahasiswa(name,password,alamat) values (?,?,?)", data.Name, data.Password, data.Alamat)
 	tx.Commit()
 	// err = db.Get(&userID,"insert into mahasiswa(name,password,alamat) values ($1,$2,$3) returning id", data.Name, data.Password, data.Alamat )
 	// if err != nil {

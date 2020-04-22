@@ -3,12 +3,12 @@ package pkgs
 import (
 	"log"
 
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
-	_ "github.com/lib/pq"
 )
 
 func InitDB() (*sqlx.DB, error) {
-	db, err := sqlx.Open("postgres", "postgres://workshop:workshop@localhost:5001/workshop?sslmode=disable")
+	db, err := sqlx.Open("mysql", "root:@tcp(localhost:3306)/workshop")
 	if err != nil {
 		log.Panic(err)
 		return nil, err

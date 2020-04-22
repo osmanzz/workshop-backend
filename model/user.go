@@ -1,9 +1,5 @@
 package model
 
-import (
-	"time"
-)
-
 type UserData struct {
 	ID       int64  `db:"id"json:"id"`
 	Name     string `db:"name"json:"name"`
@@ -15,7 +11,7 @@ type PerpustakaanData struct {
 	ID      int64      `db:"id"json:"id"`
 	MhsID   int64      `db:"mhs_id"json:"mhs_id"`
 	Buku    string     `db:"buku"json:"buku"`
-	Tanggal *time.Time `db:"tanggal"json:"tanggal"`
+	Tanggal string	   `db:"tanggal"json:"tanggal"`
 }
 
 type ResponseData struct {
@@ -33,7 +29,7 @@ type Perpustakaan struct {
 	ID      int64      `db:"id"json:"id"`
 	MhsID   int64      `db:"mhs_id"json:"mhs_id"`
 	Buku    string     `db:"buku"json:"buku"`
-	Tanggal *time.Time `db:"tanggal"json:"tanggal"`
+	Tanggal string     `db:"tanggal"json:"tanggal"`
 }
 
 type UserDataRequest struct {

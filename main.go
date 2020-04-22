@@ -21,6 +21,6 @@ func main() {
 
 	handler := c.Handler(router)
 
-	log.Println("======== successfull listening to :8022")
-	http.ListenAndServe(":8022", handler)
+	log.Println("======== successfull listening to :8080")
+	http.ListenAndServe(":8080", handler)
 }
