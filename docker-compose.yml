@@ -9,5 +9,5 @@ services:
     ports:
       - 5001:5432
     volumes:
-      -  $GOPATH/src/github.com/workshop/docker/schema:/docker-entrypoint-initdb.d
+      -  $GOPATH/src/github.com/osmanzz/workshop-backend/docker/schema:/docker-entrypoint-initdb.d
 

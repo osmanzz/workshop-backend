@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/osmanzz/workshop-backend/service"
 	"github.com/rs/cors"
-	"github.com/workshop/service"
 )
 
 func main() {
