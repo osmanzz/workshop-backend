@@ -12,7 +12,8 @@ import (
 func main() {
 	router := mux.NewRouter()
 
-	router.HandleFunc("/select_all_data", service.GetAllData).Methods("POST")
+	router.HandleFunc("/select_all_data", service.GetAllData).Methods("GET")
+	router.HandleFunc("/insert_data_mahasiswa", service.InsertMahasiswa).Methods("POST")
 
 	c := cors.New(cors.Options{
 		AllowedOrigins: []string{"*"},

@@ -31,3 +31,18 @@ func GetAllPerpustakaanDataByUserID(id int64) ([]*model.PerpustakaanData, error)
 
 	return res, nil
 }
+
+func InsertUserData(data *model.UserDataRequest) error {
+	db, err := InitDB()
+	if err != nil {
+		return err
+	}
+	tx := db.MustBegin()
+	tx.MustExec("insert into mahasiswa(name,password,alamat) values ($1,$2,$3)", data.Name, data.Password, data.Alamat)
+	tx.Commit()
+	// err = db.Get(&userID,"insert into mahasiswa(name,password,alamat) values ($1,$2,$3) returning id", data.Name, data.Password, data.Alamat )
+	// if err != nil {
+	// 	return err
+	// }
+	return nil
+}

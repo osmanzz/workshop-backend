@@ -35,3 +35,13 @@ type Perpustakaan struct {
 	Buku    string     `db:"buku"json:"buku"`
 	Tanggal *time.Time `db:"tanggal"json:"tanggal"`
 }
+
+type UserDataRequest struct {
+	Name     string `json:"name"`
+	Password string `json:"password"`
+	Alamat   string `json:"alamat"`
+}
+
+type Response struct {
+	Message string `json:"message"`
+}
