@@ -24,6 +24,7 @@ func GetAllPerpustakaanDataByUserID(id int64) ([]*model.PerpustakaanData, error)
 	if err != nil {
 		return res, err
 	}
+
 	err = db.Select(&res, "select * from perpustakaan where mhs_id=?", id)
 	if err != nil {
 		return res, err
